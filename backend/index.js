@@ -1,5 +1,7 @@
 const connectToMongo = require('./db');
 const express = require('express')
+const cors = require('cors');
+
 
 connectToMongo();
 
@@ -7,6 +9,8 @@ const app = express()
 const port = 5000
 
 
+
+app.use(cors())
 // request ki body ko access krne ke liye isko use krna pdega (req.body).......................................
 app.use(express.json())
 
@@ -32,6 +36,6 @@ app.use('/api/notes', require('./routes/notes'))
 // ............................................................
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`iNotebook backend listening at http://localhost:${port}`)
 })
 

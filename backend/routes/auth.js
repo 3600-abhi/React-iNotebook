@@ -30,7 +30,7 @@ router.post(
     // If there are errors, return bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success: false,  errors: errors.array() });
     }
 
     // Find the user in the database with the entered email of the client
@@ -38,7 +38,7 @@ router.post(
     if (user) {
       return res
         .status(400)
-        .json({ error: "sorry, user with same email already exists" });
+        .json({success: false, error: "sorry, user with same email already exists" });
     }
 
     try {
@@ -57,12 +57,15 @@ router.post(
         password: encryptedPassword,
       });
 
+
       // hum yahan pr (jwt nodejs) web token ka use kr rhe hain auth token generate krne ke liye
       const data = { user: { id: user.id } };
       const authToken = jwt.sign(data, JWT_SECRET);
-      res.json({ authToken });
+      res.json({success: true, authToken });
+
+
     } catch (error) {
-      res.status(500).send("Internal server occur !!!");
+      res.status(500).send({success: true, message: "Internal server occur !!!"});
     }
   }
 );
@@ -86,7 +89,7 @@ router.post(
     // if there are errors, return bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success: false, errors: errors.array() });
     }
 
     // ise (destructuring) bolte hain mtlb (req.body) ke andar jo email aur password naam ke properties hain unke corresponding values aa jayegi
@@ -100,7 +103,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ error: "please try to login with correct credentials" });
+          .json({success: false, error: "please try to login with correct credentials" });
       }
 
       // jo password db me pada hua hai wo hashed password hai to us hashed password ko
@@ -112,7 +115,7 @@ router.post(
       if (!comparePassword) {
         return res
           .status(400)
-          .json({ error: "Incorrect Password !!" });
+          .json({success: false, error: "Incorrect Password !!" });
       }
 
       // email aur password dono shi hain to (payload) send kro
@@ -120,9 +123,9 @@ router.post(
 
       // hum yahan pr (jwt nodejs) web token ka use kr rhe hain auth token generate krne ke liye
       const authToken = jwt.sign(data, JWT_SECRET);
-      res.json({ authToken });
+      res.json({success: true, authToken });
     } catch (error) {
-      res.status(500).send("Internal server error !!");
+      res.status(500).send({success: false, message: "Internal server error !!"});
     }
   }
 );
