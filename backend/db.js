@@ -1,4 +1,4 @@
-// Express server is setup in this index.js file
+
 
 
 const mongoose = require('mongoose');

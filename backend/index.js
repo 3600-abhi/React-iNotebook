@@ -1,3 +1,5 @@
+// Express server is setup in this index.js file
+
 const connectToMongo = require('./db');
 const express = require('express')
 const cors = require('cors');
