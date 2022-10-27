@@ -1,5 +1,8 @@
 // Express server is setup in this index.js file
 
+// Hum jb backend ko run krte hain to isi file ko run kr dete hain baaki sb kux apne aap run jo jata hai
+// backend run krne ke liye hum (nodemon) ka use krte hain
+
 const connectToMongo = require('./db');
 const express = require('express')
 const cors = require('cors');
